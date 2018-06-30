@@ -1,58 +1,41 @@
 #include <cs50.h>
 #include <stdio.h>
-#include <stdlib.h>
+
 #include <string.h>
+#include <ctype.h>
 
-char ect(char t, int k);//Encryption function of a single character
-//int k;//our key
-
-int main(int argc, string argv[])
+int main(void)
 {
-    if (argc == 2)// must be 1 argument after program name and it must be number
+    string s = get_string();//full name - coupple of words
+
+    if (s != NULL)// if we have some name
     {
+        int x = 0;//just incrementer for name's array
+            while (s[x] != '\0')// to the end of name (phraze)
+    	    {
+    	        while (s[x] == 32)// in ASCII 32=' '
+    	        {
+    	            x++;//skip spaces in start
+    	        }
 
-        int k = atoi(argv[1]);// now argumet become our key number
-
-        printf("plaintext: ");
-        string pt = get_string();
-        
-        printf("ciphertext: ");
-        for (int i = 0; i < strlen(pt); i++)//Split the string into symbols
-	    {
-	        char t = pt[i];// Take 1 character
-	        printf("%c", ect (t, k));//Output the encrypted character by our function
-	    }
-        printf("\n");
-        return 0;
-        
-    }
+    	        printf("%c", toupper(s[x]));//first letter after space is our initial, which we do capital letter
+    	         
+    	        while ((s[x] >= 'a' && s[x] <= 'z' ) || (s[x] >= 'A' && s[x] <= 'Z'))
+    	        {
+    	            x++;// skip other letters in the name
+    	        }
+    	        
+    	        while (s[x] == 32)// in ASCII 32=' '
+    	        {
+    	            x++;//skip spaces in finish
+    	        }
     
+    	    }
+    	    printf("\n");
+    	    return 0;//we had initials
+    }
     else
     {
-        printf("Usage: ./caesar k\n");
-        return 1;
+        return 1;// we do not have initials
     }
-}
-
-char ect(char t, int k)//Encryption function of a single character
-{
-
-    int ct;
-    if (t>='A' && t<='Z')
-    {
-        ct = t-65;//to alphabetical order for capital letters
-        ct = (ct + k)%26;//Encrypted by algorithm
-        ct = ct + 65;// back to ASCII
-    }
-    
-    else if (t>='a' && t<='z')
-    {
-        ct = (t-97 + k)%26 + 97;// do with lower letters same as we do with capital letters but in 1 line
-    }   
-    
-    else// if not a letter
-    {
-        ct = t;
-    }
-    return ct;
 }
